@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring accessors="true" comment="Delete 4 elements from workspace&#x0D;&#x0A;- Original elements:&#x0D;&#x0A;     hibernate-validator-6.0.13.Final.jar&#x0D;&#x0A;     hibernate-validator-annotation-processor-6.0.13.Final.jar&#x0D;&#x0A;     hibernate-validator-cdi-6.0.13.Final.jar&#x0D;&#x0A;     persistence.xml" description="Delete elements" element1="/Practica-BlaBlaCar/WebContent/WEB-INF/lib/hibernate-validator-cdi-6.0.13.Final.jar" element2="/Practica-BlaBlaCar/WebContent/WEB-INF/lib/hibernate-validator-annotation-processor-6.0.13.Final.jar" element3="/Practica-BlaBlaCar-EJB/ejbModule/META-INF/persistence.xml" element4="/Practica-BlaBlaCar/WebContent/WEB-INF/lib/hibernate-validator-6.0.13.Final.jar" elements="0" flags="589830" id="org.eclipse.jdt.ui.delete" resources="4" stamp="1548864431944" subPackages="false" version="1.0"/>
+</session>

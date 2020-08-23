@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pageflow:Pageflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf15432494852280" configfile="/Practica-BlaBlaCar/WebContent/WEB-INF/faces-config.xml">
+  <nodes xsi:type="pageflow:PFPage" name="login" x="554" y="380" id="pf15438765571090" referenceLink="//@navigationRule.5/@navigationCase.0/@toViewId|" outlinks="pf15438765571101 pf15438765571102" inlinks="pf15438765571103 pf15438765571104" path="/login.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="bienvenido" x="770" y="188" id="pf15438765571105" referenceLink="//@navigationRule.0/@navigationCase.0/@toViewId|" inlinks="pf15438765571101" path="/bienvenido.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="falloLogin" x="770" y="572" id="pf15438765571106" referenceLink="//@navigationRule.1/@navigationCase.0/@toViewId|" inlinks="pf15438765571102" path="/falloLogin.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="registrar" x="338" y="178" id="pf15438765571117" referenceLink="//@navigationRule.4/@navigationCase.0/@toViewId|" outlinks="pf15438765571103 pf15438765571118" inlinks="pf15438765571119" path="/registrar.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="falloRegistrar" x="122" y="279" id="pf154387655711110" referenceLink="//@navigationRule.5/@fromViewId|" outlinks="pf15438765571119 pf15438765571104" inlinks="pf15438765571118" path="/falloRegistrar.jsp"/>
+  <links id="pf15438765571101" target="pf15438765571105" source="pf15438765571090" outcome="si"/>
+  <links id="pf15438765571102" target="pf15438765571106" source="pf15438765571090" outcome="no"/>
+  <links id="pf15438765571103" target="pf15438765571090" source="pf15438765571117" outcome="si"/>
+  <links id="pf15438765571118" target="pf154387655711110" source="pf15438765571117" outcome="no"/>
+  <links id="pf15438765571119" target="pf15438765571117" source="pf154387655711110" outcome="registrar"/>
+  <links id="pf15438765571104" target="pf15438765571090" source="pf154387655711110" outcome="login"/>
+</pageflow:Pageflow>

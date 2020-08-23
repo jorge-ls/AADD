@@ -1,0 +1,64 @@
+package model;
+
+import java.io.Serializable;
+
+public class Valoracion implements Serializable {
+	
+	private static final long serialVersionUID = 1L;
+
+	private int id;
+	private String comentario;
+	private int puntuacion;
+	private Usuario emisor;
+	private Usuario receptor;
+	private ReservaJPA reserva;
+	
+	public int getId() {
+		return id;
+	}
+	
+	public void setId(int id) {
+		this.id = id;
+	}
+	
+	public String getComentario() {
+		return comentario;
+	}
+	
+	public void setComentario(String comentario) {
+		this.comentario = comentario;
+	}
+	
+	public int getPuntuacion() {
+		return puntuacion;
+	}
+	
+	public void setPuntuacion(int puntuacion) {
+		this.puntuacion = puntuacion;
+	}
+	
+	public Usuario getEmisor() {
+		return emisor;
+	}
+	
+	public void setEmisor(Usuario emisor) {
+		this.emisor = emisor;
+	}
+	
+	public Usuario getReceptor() {
+		return receptor;
+	}
+	
+	public void setReceptor(Usuario receptor) {
+		this.receptor = receptor;
+	}
+	
+	public ReservaJPA getReserva() {
+		return reserva;
+	}
+	
+	public void setReserva(ReservaJPA reserva) {
+		this.reserva = reserva;
+	}
+
+}

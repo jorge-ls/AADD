@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<body>
+	<div>
+		<a href="faceletsWelcome.xhtml">Inicio</a><br />
+		<a href="faceletsLogin.xhtml">Login</a><br />
+		<a href="faceletsRegistro.xhtml">Registro</a><br />
+		<a href="faceletsAnyadirCoche.xhtml">Añadir Coche</a><br />
+		<a href="faceletsRegistrarViaje.xhtml">Registro Viaje</a><br />
+		<a href="faceletsListarViajes.xhtml">Listar Viajes</a><br />
+		<a href="faceletsReservaViaje.xhtml">Reserva Viaje</a><br />
+		<a href="faceletsViajesPropios.xhtml">Mis Viajes</a><br />
+	</div>
+</body>
+</html>

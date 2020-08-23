@@ -1,0 +1,55 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<ui:composition template="/WEB-INF/templates/basicTemplate.xhtml">
+	<ui:define name="title">Añadir Coche</ui:define>
+	<ui:define name="content">
+<!-- 		<h:form> -->
+<!-- 			<h:panelGrid columns="2"> -->
+<!-- 				<h:outputText value="Matricula"></h:outputText> -->
+<!-- 				<h:inputText value="#{beanAnyadirCoche.matricula}"></h:inputText> -->
+<!-- 				<h:outputText value="Modelo"></h:outputText> -->
+<!-- 				<h:inputText value="#{beanAnyadirCoche.modelo}"></h:inputText> -->
+<!-- 				<h:outputText value="Año"></h:outputText> -->
+<!-- 				<h:inputText value="#{beanAnyadirCoche.anyo}"></h:inputText> -->
+<!-- 				<h:outputText value="Confort"></h:outputText> -->
+<!-- 				<h:inputText value="#{beanAnyadirCoche.confort}"></h:inputText> -->
+<!-- 			</h:panelGrid> -->
+<!-- 			<h:commandButton value="Añadir" action="#{beanAnyadirCoche.anyadirCoche}"></h:commandButton> -->
+<!-- 		</h:form> -->
+		
+	<h:form>
+    <p:panel id="panel" header="Añadir coche" style="width:400px;">
+ 
+<!--         <p:messages id="msgs" /> -->
+ 		<p:growl id="growl" sticky="true" />
+        <h:panelGrid columns="3" cellpadding="1">
+            <p:outputLabel for="matricula" value="Matricula:" />
+            <p:inputText id="matricula" value="#{beanAnyadirCoche.matricula}" required="true" label="Matricula"/>
+            <p:message for="matricula" display="icon" />
+ 
+            <p:outputLabel for="modelo" value="Modelo:" />
+            <p:inputText id="modelo" value="#{beanAnyadirCoche.modelo}" label="Modelo" required="true"/>
+            <p:message for="modelo"  display="icon" />
+            
+            <p:outputLabel for="año" value="Año:" />
+            <p:inputText id="año" value="#{beanAnyadirCoche.anyo}" label="Año" required="true"/>
+            
+            <p:message for="año" display="icon" />
+            
+            <p:outputLabel for="confort" value="Confort:" />
+            <p:inputText id="confort" value="#{beanAnyadirCoche.confort}" label="Confort" required="true"/>
+            <p:message for="confort" display="icon" />
+ 
+        </h:panelGrid>
+ 
+        <p:commandButton value="Añadir" update="panel" action="#{beanAnyadirCoche.anyadirCoche}" icon="pi pi-check" />
+    </p:panel>
+</h:form>
+	</ui:define>
+</ui:composition>
+</html>

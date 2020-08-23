@@ -1,0 +1,48 @@
+package beans;
+
+import java.io.Serializable;
+
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
+
+import controlador.ControladorBlaBlaCar;
+
+@ManagedBean(name = "beanLogin")
+@SessionScoped
+public class BeanLogin implements Serializable {
+
+	private String usuario;
+	private String clave;
+	
+	public String getUsuario() {
+		return usuario;
+	}
+	
+	public void setUsuario(String usuario) {
+		this.usuario = usuario;
+	}
+	
+	public String getClave() {
+		return clave;
+	}
+	
+	public void setClave(String clave) {
+		this.clave = clave;
+	}
+	
+	public String validacion() {
+		if (ControladorBlaBlaCar.getInstancia().existeUsuario(usuario) != null) {
+			if (ControladorBlaBlaCar.getInstancia().loginUsuario(usuario, clave)) {
+				return "faceletsWelcome";
+			} else {
+				setClave("");
+				return "faceletsLogin";
+			}
+		} else {
+			return "faceletsRegistro";
+		}
+	}
+	
+	
+}

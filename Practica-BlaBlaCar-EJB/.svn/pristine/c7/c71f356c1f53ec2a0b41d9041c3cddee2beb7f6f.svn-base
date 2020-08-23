@@ -1,0 +1,36 @@
+package dao;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
+
+import model.Usuario;
+import model.Valoracion;
+
+public class ValoracionJPADAO implements ValoracionDAO {
+
+private EntityManager em;
+	
+	public ValoracionJPADAO(EntityManager em) {
+		this.em = em;
+	}
+
+	@Override
+	public void valorar(int idViaje, Usuario conductor, Usuario pasajero, int puntuacion, String comentario) {
+		Valoracion valoracion = new Valoracion();
+		valoracion.setComentario(comentario);
+		valoracion.setPuntuacion(puntuacion);
+		valoracion.setEmisor(pasajero);
+		valoracion.setReceptor(conductor);
+		pasajero.addValoracionEmitida(valoracion);
+		conductor.addValoracionRecibida(valoracion);
+		EntityTransaction tx = em.getTransaction();
+		tx.begin();
+		try{
+			em.persist(valoracion);
+			tx.commit();
+		} catch (Exception e){
+			e.printStackTrace();
+		}
+	}
+	
+}

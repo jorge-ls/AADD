@@ -1,0 +1,40 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<ui:composition template="/WEB-INF/templates/basicTemplate.xhtml">
+
+	<ui:define name="title">Reservas pendientes</ui:define>
+	<ui:define name="content">
+		<h:form>
+			<p:dataTable id="reservas" var="reserva"
+				value="#{beanReservasPendientes.reservas}" style="width:800px;">
+				<f:facet name="header"> Reservas pendientes </f:facet>
+				<p:column headerText="Id" width="100">
+					<h:outputText value="#{reserva.id}" />
+				</p:column>
+				<p:column headerText="Usuario" width="100">
+					<h:outputText value="#{reserva.usuario.usuario}" />
+				</p:column>
+				<p:column headerText="Comentario" width="100">
+					<h:outputText value="#{reserva.comentario}" />
+				</p:column>
+				<p:column headerText="Estado" width="100">
+					<h:outputText value="#{reserva.estado}" />
+				</p:column>
+				<p:column width="200">
+					<p:commandButton value="Aceptar" action="#{beanReservasPendientes.aceptarViaje}">
+						<f:setPropertyActionListener value="#{reserva}" target="#{beanReservasPendientes.reservaSeleccionada}"/> 
+					</p:commandButton>
+					<p:commandButton value="Rechazar" action="#{beanReservasPendientes.rechazarViaje}">
+						<f:setPropertyActionListener value="#{reserva}" target="#{beanReservasPendientes.reservaSeleccionada}"/> 
+					</p:commandButton>
+				</p:column>
+			</p:dataTable>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

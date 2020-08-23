@@ -1,0 +1,70 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">	
+<ui:composition template="/WEB-INF/templates/basicTemplate.xhtml">
+	<ui:define name="title">Registro Usuarios</ui:define>
+	<ui:define name="content">
+<!-- 		<h:form> -->
+<!-- 			<h:panelGrid columns="2"> -->
+<!-- 				<h:outputText value="Usuario (6-128 max.)" ></h:outputText> -->
+<!-- 				<h:inputText id="usuario" value="#{beanRegistrar.usuario}" required="true"> -->
+<!-- 					<f:validateLength minimum="6" maximun="128" /> -->
+<!-- 					<p:ajax execute="usuario" render="usuarioError" /> -->
+<!-- 				</h:inputText> -->
+				
+<!-- 				<h:outputText value="Clave"></h:outputText> -->
+<!-- 				<h:inputSecret value="#{beanRegistrar.clave1}" required="true"></h:inputSecret> -->
+<!-- 				<h:outputText value="Repetir Clave"></h:outputText> -->
+<!-- 				<h:inputSecret value="#{beanRegistrar.clave2}" required="true"></h:inputSecret> -->
+<!-- 				<h:outputText value="Correo"></h:outputText> -->
+<!-- 				<h:inputText value="#{beanRegistrar.email}"></h:inputText> -->
+<!-- 				<h:outputText value="Telefono"></h:outputText> -->
+<!-- 				<h:inputText value="#{beanRegistrar.telefono}"></h:inputText> -->
+<!-- 			</h:panelGrid> -->
+<!-- 			<h:commandButton value="Registrar" action="#{beanRegistrar.registro}"></h:commandButton> -->
+<!-- 			<p:message id="usuarioError" for="usuario" style="color:red;padding:10px;" /> -->
+<!-- 		</h:form> -->
+		
+	<h:form>
+    <p:panel id="panel" header="Registro" style="width:400px;">
+ 
+<!--         <p:messages id="msgs" /> -->
+ 		<p:growl id="growl" sticky="true" />
+        <h:panelGrid columns="3" cellpadding="1">
+            <p:outputLabel for="usuario" value="Usuario:" />
+            <p:inputText id="usuario" value="#{beanRegistrar.usuario}" required="true" label="Usuario">
+                <f:validateLength minimum="6" maximun="128" />
+            </p:inputText>
+            <p:message for="usuario" display="icon" />
+ 
+            <p:outputLabel for="clave" value="Clave:" />
+            <p:password id="clave" value="#{beanRegistrar.clave1}" label="Clave" required="true">
+                <p:ajax update="msgClave" event="keyup" />
+            </p:password>
+            <p:message for="clave" id="msgClave" display="icon" />
+            
+            <p:outputLabel for="clave2" value="Repetir clave:" />
+            <p:password id="clave2" value="#{beanRegistrar.clave2}" label="Clave" required="true">
+                <p:ajax update="msgClave2" event="keyup" />
+            </p:password>
+            <p:message for="clave2" id="msgClave2" display="icon" />
+            
+            <p:outputLabel for="email" value="Email:" />
+            <p:inputText id="email" value="#{beanRegistrar.email}" label="Email" />
+            <p:message for="email" display="icon" />
+            
+            <p:outputLabel for="telefono" value="Telefono:" />
+            <p:inputText id="telefono" value="#{beanRegistrar.telefono}" label="Telefono" />
+            <p:message for="telefono" display="icon" />
+            
+	</h:panelGrid>
+ 			<p:commandButton value="Registrar" update="growl" action="#{beanRegistrar.registro}" icon="pi pi-check" />
+    </p:panel>
+</h:form>
+	</ui:define>
+</ui:composition>
+</html>

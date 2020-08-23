@@ -1,0 +1,16 @@
+package dao;
+
+import javax.ejb.Local;
+
+@Local
+public interface FactoriaDAOLocal {
+
+	UsuarioDAO getUsuarioDAO();
+	CocheDAO getCocheDAO();
+	ParadaDAO getParadaDAO();
+	ReservaDAO getReservaDAO();
+	ViajeDAO getViajeDAO();
+	ValoracionDAO getValoracionDAO();
+	void setFactoriaDAO(int tipo);
+	
+}

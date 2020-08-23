@@ -1,0 +1,33 @@
+package jms;
+
+import java.util.Map;
+
+import javax.faces.context.FacesContext;
+import javax.jms.JMSException;
+import javax.jms.Message;
+import javax.jms.MessageListener;
+import javax.jms.TextMessage;
+
+import beans.BeanSugerencias;
+
+public class OyenteSugerencia implements MessageListener {
+	private BeanSugerencias beanSugerencias;
+	public OyenteSugerencia() {
+		Map<String, Object> session =
+				FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
+		beanSugerencias = (BeanSugerencias) session.get("beanSugerencias");
+	}
+	@Override
+	public void onMessage(Message mensaje) {
+		if (mensaje instanceof TextMessage) {
+			TextMessage mensajeTexto = (TextMessage)mensaje;
+			System.out.println("OyenteSugerencia.onMessage()");
+			try {
+				beanSugerencias.getSugerenciasRecibidas().put(mensajeTexto.getText(),
+						mensajeTexto.getText());
+			} catch (JMSException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+}

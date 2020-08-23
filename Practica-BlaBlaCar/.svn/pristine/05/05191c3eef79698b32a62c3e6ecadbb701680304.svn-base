@@ -1,0 +1,180 @@
+package beans;
+
+import java.io.Serializable;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+
+import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
+import javax.faces.event.ActionEvent;
+import javax.jms.JMSException;
+import javax.naming.NamingException;
+
+import controlador.ControladorBlaBlaCar;
+import jms.PublicadorValoracion;
+import jms.SuscriptorApartado;
+import model.Usuario;
+import model.Valoracion;
+import model.ViajeJPA;
+
+@ManagedBean(name="beanValoracion")
+@SessionScoped
+public class BeanValoracion implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+	
+	private String puntuacion;
+	private String comentario;
+	private Usuario conductor;
+	private List<Usuario> usuarios = new LinkedList<Usuario>();
+	private Usuario usuarioSeleccionado;
+	@ManagedProperty(value = "#{beanViajesRealizados}")
+	private BeanViajesRealizados viajesRealizados;
+	@ManagedProperty(value = "#{beanLogin}")
+	private BeanLogin login;
+	private Map<String, String> mensajesRecibidos = new LinkedHashMap<String, String>();
+	private String[] mensajesRecibidosSeleccionados = null;
+	//private List<Valoracion> valoracionesRecibidas;
+	
+	public String getPuntuacion() {
+		return puntuacion;
+	}
+	
+	public Usuario getUsuarioSeleccionado() {
+		return usuarioSeleccionado;
+	}
+	
+	public void setUsuarioSeleccionado(Usuario usuarioSeleccionado) {
+		this.usuarioSeleccionado = usuarioSeleccionado;
+	}
+	
+	public List<Usuario> getUsuarios() {
+		if (viajesRealizados.getViajeSeleccionado() != null) {
+			int idViaje = viajesRealizados.getViajeSeleccionado().getId();
+			usuarios = ControladorBlaBlaCar.getInstancia().getUsuariosViaje(idViaje, login.getUsuario());
+		}
+		return usuarios;
+	}
+	
+	public Usuario getConductor() {
+		int idViaje = viajesRealizados.getViajeSeleccionado().getId();
+		conductor = ControladorBlaBlaCar.getInstancia().getConductorViaje(idViaje);
+		return conductor;
+	}
+	
+	public void setConductor(Usuario conductor) {
+		this.conductor = conductor;
+	}
+	
+	public void setUsuarios(List<Usuario> usuarios) {
+		this.usuarios = usuarios;
+	}
+	
+	public void setPuntuacion(String puntuacion) {
+		this.puntuacion = puntuacion;
+	}
+	
+	public String[] getMensajesRecibidosSeleccionados() {
+		return mensajesRecibidosSeleccionados;
+	}
+	
+	public void setMensajesRecibidosSeleccionados(
+			String[] mensajesRecibidosSeleccionados) {
+		this.mensajesRecibidosSeleccionados =
+				mensajesRecibidosSeleccionados;
+	}
+	
+	public Map<String, String> getMensajesRecibidos() {
+		return mensajesRecibidos;
+	}
+	
+	public void setMensajesRecibidos(Map<String, String> mensajesRecibidos)
+	{
+		this.mensajesRecibidos = mensajesRecibidos;
+	}
+	
+	public String getComentario() {
+		return comentario;
+	}
+	
+	public void setComentario(String comentario) {
+		this.comentario = comentario;
+	}
+	
+	public BeanViajesRealizados getViajesRealizados() {
+		return viajesRealizados;
+	}
+
+	public void setViajesRealizados(BeanViajesRealizados viajesRealizados) {
+		this.viajesRealizados = viajesRealizados;
+	}
+
+	public BeanLogin getLogin() {
+		return login;
+	}
+
+	public void setLogin(BeanLogin login) {
+		this.login = login;
+	}
+
+	/*public List<Valoracion> getValoracionesRecibidas() {
+		valoracionesRecibidas = ControladorBlaBlaCar.getInstancia().existeUsuario(login.getUsuario()).getValoracionesRecibidas();
+		return valoracionesRecibidas;
+	}
+
+	public void setValoracionesRecibidas(List<Valoracion> valoracionesRecibidas) {
+		this.valoracionesRecibidas = valoracionesRecibidas;
+	}*/
+
+	public void enviarTexto(ActionEvent event) {
+		String resultado = "";
+		if (puntuacion == null || puntuacion.equals("")) {
+			resultado = "Se tiene que elegir una puntuacion de 1 a 10";
+			FacesContext context = FacesContext.getCurrentInstance();
+	        context.addMessage("formEnvio:puntuacion", new FacesMessage(FacesMessage.SEVERITY_ERROR,"Error",resultado));
+		}
+		
+		try {
+			PublicadorValoracion.enviar(viajesRealizados.getViajeSeleccionado().getId(), usuarioSeleccionado.getUsuario(), puntuacion, 
+					comentario);
+			resultado = "Envio realizado correctamente.";
+			FacesContext context = FacesContext.getCurrentInstance();
+	        context.addMessage("formEnvio:puntuacion", new FacesMessage(FacesMessage.SEVERITY_INFO,"Successful",resultado));
+		
+		} catch (NamingException e) {
+			resultado = "Error durante el envio.";
+			FacesContext context = FacesContext.getCurrentInstance();
+	        context.addMessage("formEnvio:puntuacion", new FacesMessage(FacesMessage.SEVERITY_ERROR,"Error",resultado));
+			e.printStackTrace();
+		
+		} catch (JMSException e) {
+			resultado = "Error durante el envio.";
+			FacesContext context = FacesContext.getCurrentInstance();
+	        context.addMessage("formEnvio:puntuacion", new FacesMessage(FacesMessage.SEVERITY_ERROR,"Error",resultado));
+			e.printStackTrace();
+		}
+		
+		puntuacion = "";
+		comentario = "";
+	}
+	
+	public void recibirTodosTexto(ActionEvent event) {
+		Usuario usu = ControladorBlaBlaCar.getInstancia().existeUsuario(login.getUsuario());
+		List<ViajeJPA> viajes = ControladorBlaBlaCar.getInstancia().listarViajesRealizados(usu);
+		ViajeJPA v = viajes.get(0);
+		try {
+			SuscriptorApartado.registrarApartado(v.getId());
+		} catch (NamingException e) {
+			e.printStackTrace();
+		} catch (JMSException e) {
+			e.printStackTrace();
+		}
+	}
+
+}

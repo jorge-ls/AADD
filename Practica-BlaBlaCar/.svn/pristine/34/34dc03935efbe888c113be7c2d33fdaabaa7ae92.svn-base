@@ -1,0 +1,91 @@
+package beans;
+
+import java.io.Serializable;
+import java.util.LinkedHashMap;
+import java.util.Map;
+
+import javax.faces.application.FacesMessage;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
+import javax.jms.JMSException;
+import javax.naming.NamingException;
+
+import jms.PublicadorSugerencia;
+import jms.SuscriptorSugerencias;
+
+@ManagedBean(name = "beanSugerencias")
+@SessionScoped
+public class BeanSugerencias implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+	
+	private String titulo, descripcion;
+	private Map<String, String> sugerenciasRecibidas = new LinkedHashMap<String, String>();
+	private String[] sugerenciasRecibidasSeleccionadas = null;
+
+	public String getTitulo() {
+		return titulo;
+	}
+
+	public void setTitulo(String titulo) {
+		this.titulo = titulo;
+	}
+
+	public String getDescripcion() {
+		return descripcion;
+	}
+
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
+	}
+	
+	public Map<String, String> getSugerenciasRecibidas() {
+		return sugerenciasRecibidas;
+	}
+
+	public void setSugerenciasRecibidas(Map<String, String> sugerenciasRecibidas) {
+		this.sugerenciasRecibidas = sugerenciasRecibidas;
+	}
+
+
+	public String[] getSugerenciasRecibidasSeleccionadas() {
+		return sugerenciasRecibidasSeleccionadas;
+	}
+
+	public void setSugerenciasRecibidasSeleccionadas(String[] sugerenciasRecibidasSeleccionadas) {
+		this.sugerenciasRecibidasSeleccionadas = sugerenciasRecibidasSeleccionadas;
+	}
+
+	public String enviarSugerencia() { //void enviarSugerencia(ActionEvent event) {
+		String resultado = "";
+		if (titulo == null || titulo.equals("") || descripcion == null || descripcion.equals("")) {
+			resultado = "No se pueden dejar vacios ni el titulo ni la descripción";
+			FacesContext.getCurrentInstance().addMessage("sugerencias:descripcion", new FacesMessage(resultado));
+		}
+		try {
+			PublicadorSugerencia.enviar(/*titulo, */descripcion);			
+		} catch (NamingException | JMSException e) {
+			resultado = "Fallo al realizar la sugerencia.";
+			e.printStackTrace();
+		}
+		resultado = "Sugerencia realizada correctamente.";
+		FacesContext.getCurrentInstance().addMessage("sugerencias:descripcion", new FacesMessage(resultado));
+	
+		titulo = "";
+		descripcion = "";
+		return "faceletsSugerencias";
+	}
+
+	public String recibirTodas() { //void recibirTodas(ActionEvent event) {
+		try {
+			SuscriptorSugerencias.registrarApartado();
+		} catch (NamingException e) {
+			e.printStackTrace();
+		} catch (JMSException e) {
+			e.printStackTrace();
+		}
+		return "faceletsSugerencias";
+	}
+	
+}

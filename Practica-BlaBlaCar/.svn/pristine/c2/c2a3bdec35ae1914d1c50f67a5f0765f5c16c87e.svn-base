@@ -1,0 +1,27 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<ui:composition template="/WEB-INF/templates/basicTemplate.xhtml">
+	<ui:define name="title">Nueva Sugerencia</ui:define>
+	<ui:define name="content">
+		<p:growl id="growl" showDetail="true" sticky="true" />
+		<h:form id="sugerencias">
+			<p:panel id="panel" header="Nueva sugerencia" style="width:400px;">
+				<h:panelGrid columns="2" cellpadding="4">
+					<p:outputLabel for="titulo" value="Titulo: " />
+					<p:inputText id="titulo" value="#{beanSugerencias.titulo}" required="true" />
+
+					<p:outputLabel for="descripcion" value="Descripción: " />
+					<p:inputTextarea id="descripcion" rows="4" cols="20" value="#{beanSugerencias.descripcion}" required="true" />
+					
+					<p:commandButton id="enviar" value="Enviar" actionListener="#{beanSugerencias.enviarSugerencia}" update="growl" />
+				</h:panelGrid>
+			</p:panel>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

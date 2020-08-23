@@ -1,0 +1,69 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<ui:composition template="/WEB-INF/templates/basicTemplate.xhtml">
+	<ui:define name="title">Enviar valoracion</ui:define>
+	<ui:define name="content">
+		<h:form id="formEnvio">
+			<p:panel id="panel" header="Envio de valoracion" style="margin-bottom:10px;width:1030px">
+				<p:messages id="messages" />
+				<p:growl id="growl" showDetail="true" sticky="true" />
+				<p:dataTable var="usuario" value="#{beanValoracion.usuarios}"
+					style="width:1000px;">
+					<f:facet name="header">Participantes del viaje</f:facet>
+					<p:column headerText="Nombre" width="35">
+						<h:outputText value="#{usuario.usuario}" />
+					</p:column>
+					<p:column headerText="Correo" width="90">
+						<h:outputText value="#{usuario.email}" />
+					</p:column>
+					<p:column width="30">
+						<p:commandButton value="Realizar valoracion"
+							onclick="PF('dlg2').show();">
+							<f:setPropertyActionListener value="#{usuario}"
+								target="#{beanValoracion.usuarioSeleccionado}" />
+						</p:commandButton>
+					</p:column>
+					<f:facet name="footer">
+						<h:outputText value="El conductor es " />
+        				<h:outputText value="#{beanValoracion.conductor.usuario}" />
+    				</f:facet>
+				</p:dataTable>
+
+				<p:dialog header="Valoracion" widgetVar="dlg2" modal="true"
+					height="250">
+					<h:panelGrid columns="4" cellpadding="5">
+						<h:outputLabel for="puntuacion" value="Puntuacion" />
+						<h:selectOneMenu id="puntuacion" value="#{beanValoracion.puntuacion}"
+							required="true" label="Puntuacion">
+							<f:selectItem itemLabel="1" itemValue="1" />
+							<f:selectItem itemLabel="2" itemValue="2" />
+							<f:selectItem itemLabel="3" itemValue="3" />
+							<f:selectItem itemLabel="4" itemValue="4" />
+							<f:selectItem itemLabel="5" itemValue="5" />
+							<f:selectItem itemLabel="6" itemValue="6" />
+							<f:selectItem itemLabel="7" itemValue="7" />
+							<f:selectItem itemLabel="8" itemValue="8" />
+							<f:selectItem itemLabel="9" itemValue="9" />
+							<f:selectItem itemLabel="10" itemValue="10" />
+						</h:selectOneMenu>
+						<p:message for="puntuacion" />
+						<br />
+						<h:outputLabel for="txt2" value="Comentario" />
+						<p:inputTextarea id="txt2" value="#{beanValoracion.comentario}"
+							label="Text2"></p:inputTextarea>
+						<br />
+						<p:commandButton value="Enviar" id="envio"
+							actionListener="#{beanValoracion.enviarTexto}" style="margin-right:20px;"
+							styleClass="ui-priority-primary" update="@form" />
+					</h:panelGrid>
+				</p:dialog>
+			</p:panel>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

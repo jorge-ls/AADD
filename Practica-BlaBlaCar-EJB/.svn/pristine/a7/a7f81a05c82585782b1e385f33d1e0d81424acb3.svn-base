@@ -1,0 +1,9 @@
+package dao;
+
+import model.Usuario;
+
+public interface ValoracionDAO {
+
+	void valorar(int idViaje, Usuario conductor, Usuario pasajero, int puntuacion, String comentario);
+	
+}

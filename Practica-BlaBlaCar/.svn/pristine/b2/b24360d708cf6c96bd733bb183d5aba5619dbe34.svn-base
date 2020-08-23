@@ -1,0 +1,59 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<ui:composition template="/WEB-INF/templates/basicTemplate.xhtml">
+
+	<ui:define name="title">Reserva de viaje</ui:define>
+	<ui:define name="content">
+		<h:form>
+			<p:dataTable id="viajes" var="viaje"
+				value="#{beanReservarViaje.viajes}" style="width:1100px;">
+				<f:facet name="header">Viajes Ofertados</f:facet>
+				<p:column headerText="Id" width="100">
+					<h:outputText value="#{viaje.id}" />
+				</p:column>
+				<p:column headerText="Plazas" width="100">
+					<h:outputText value="#{viaje.plazas}" />
+				</p:column>
+				<p:column headerText="Precio" width="100">
+					<h:outputText value="#{viaje.precio}" />
+				</p:column>
+				<p:column headerText="Ciudad origen" width="100">
+					<h:outputText value="#{viaje.origen.ciudad}" />
+				</p:column>
+				<p:column headerText="Ciudad destino" width="100">
+					<h:outputText value="#{viaje.destino.ciudad}" />
+				</p:column>
+				<p:column headerText="Fecha salida" width="100">
+					<h:outputText value="#{viaje.origen.fecha}" />
+				</p:column>
+				<p:column headerText="Fecha llegada" width="100">
+					<h:outputText value="#{viaje.origen.fecha}" />
+				</p:column>
+				<p:column headerText="Reservar" width="100">
+					<p:commandButton value="Reservar" onclick="PF('dlg2').show();">
+						<f:setPropertyActionListener value="#{viaje}"
+							target="#{beanReservarViaje.viajeSeleccionado}" />
+					</p:commandButton>
+				</p:column>
+			</p:dataTable>
+			<br />
+			<p:dialog header="Reserva de viaje" widgetVar="dlg2" modal="true"
+				height="250">
+				<h3>Introduce un comentario</h3>
+				<p:inputTextarea id="comentario"
+					value="#{beanReservarViaje.comentario}" rows="6" cols="33" />
+				<br />
+				<p:commandButton value="Reservar" onclick="PF('dlg2').hide();"
+					action="#{beanReservarViaje.reservarViaje}">
+
+				</p:commandButton>
+			</p:dialog>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

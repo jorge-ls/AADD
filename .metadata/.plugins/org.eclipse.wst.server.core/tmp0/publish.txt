@@ -1,0 +1,4 @@
+#GlassFish 3
+#Wed Jun 12 11:42:37 CEST 2019
+org.eclipse.jst.jee.server\:Practica-BlaBlaCar=C\:\\glassfish4\\glassfish\\domains\\domain1\\eclipseApps\\Practica-BlaBlaCar
+org.eclipse.jst.jee.server\:Practica-BlaBlaCar-EJB=C\:\\glassfish4\\glassfish\\domains\\domain1\\eclipseApps\\Practica-BlaBlaCar-EJB

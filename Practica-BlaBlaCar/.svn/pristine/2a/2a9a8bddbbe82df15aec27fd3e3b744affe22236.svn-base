@@ -1,0 +1,64 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<ui:composition template="/WEB-INF/templates/basicTemplate.xhtml">
+<ui:define name="title">
+Registrar Viaje
+</ui:define>
+	<ui:define name="content">
+		<h:form>
+			<p:panel id="panel" header="Registrar viaje" style="width:500px;">
+			<p:growl id="growl" sticky="true" />
+			<h:panelGrid columns="3" cellpadding="2">
+				<p:outputLabel for="plazas" value="Plazas:"  ></p:outputLabel>
+				<p:inputText id="plazas" value="#{beanRegistrarViaje.plazas}" required="true" label="Plazas">
+					<f:validateLongRange minimum="2" maximum="10"></f:validateLongRange>
+				</p:inputText>
+				<p:message for="plazas" display="icon" />
+				
+				<p:outputLabel for="precio" value="Precio:" ></p:outputLabel>
+				<p:inputText id="precio" value="#{beanRegistrarViaje.precio}" label="Precio" required="true"></p:inputText>
+				<p:message for="precio" display="icon" />
+				
+				<p:outputLabel for="cOrigen" value="Ciudad origen:" ></p:outputLabel>
+				<p:inputText id="cOrigen" value="#{beanRegistrarViaje.ciudadOrigen}" required="true" label="Ciudad origen"></p:inputText>
+				<p:message for="cOrigen" display="icon" />
+				
+				<p:outputLabel for="cDestino" value="Ciudad destino:" ></p:outputLabel>
+				<p:inputText id="cDestino" value="#{beanRegistrarViaje.ciudadDestino}" required="true" label="Ciudad destino"></p:inputText>
+				<p:message for="cDestino" display="icon" />
+				
+				<p:outputLabel for="popup" value="Fecha de salida:" ></p:outputLabel>
+				<p:calendar id="popup" value="#{beanRegistrarViaje.fechaOrigen}" required="true" label="FSalida"></p:calendar>
+				<p:message for="popup" display="icon" />
+				
+				<p:outputLabel for="popup2" value="Fecha de llegada:" ></p:outputLabel>
+				<p:calendar id="popup2" value="#{beanRegistrarViaje.fechaDestino}" required="true" label="FDestino"></p:calendar>
+				<p:message for="popup2" display="icon" />
+				
+				<p:outputLabel value="Calle Salida"></p:outputLabel>
+				<p:inputText idvalue="#{beanRegistrarViaje.calleOrigen}" label="COrigen"></p:inputText>
+				<br/>
+				
+				<p:outputLabel value="Calle Llegada"></p:outputLabel>
+				<p:inputText value="#{beanRegistrarViaje.calleDestino}" label="CDestino"></p:inputText>
+				<br/>
+				
+				<p:outputLabel value="Código Postal Origen"></p:outputLabel>
+				<p:inputText value="#{beanRegistrarViaje.cpOrigen}" label="CpOrigen"></p:inputText>
+				<br/>
+				
+				<p:outputLabel value="Código Postal Destino"></p:outputLabel>
+				<p:inputText value="#{beanRegistrarViaje.cpDestino}" label="CpDestino"></p:inputText>
+				<br/>
+			</h:panelGrid>
+			<p:commandButton value="Registrar" update="growl" action="#{beanRegistrarViaje.registroViaje}" icon="pi pi-check"></p:commandButton>
+			</p:panel>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

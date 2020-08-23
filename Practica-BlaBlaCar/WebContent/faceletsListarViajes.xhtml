@@ -1,0 +1,80 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+		xmlns:p="http://primefaces.org/ui">
+<ui:composition template="/WEB-INF/templates/basicTemplate.xhtml">
+	<ui:define name="title">Listar Viajes</ui:define>
+	<ui:define name="content">
+		<h:form>
+			<h:panelGrid columns="2">
+				<p:outputLabel value="Pendientes" />
+				<p:selectBooleanCheckbox value="#{beanListarViajesUsuario.pendientes}" label="Pendientes" />
+				<p:outputLabel value="Realizados" />
+				<p:selectBooleanCheckbox value="#{beanListarViajesUsuario.realizados}" label="Realizados" />
+				<p:outputLabel value="Propios" />
+				<p:selectBooleanCheckbox value="#{beanListarViajesUsuario.propios}" label="Propios" />
+				<p:outputLabel value="Ordenación" />
+				<p:selectOneMenu id="orden" value="#{beanListarViajesUsuario.tipoOrdenacion}" style="width:125px">
+					<f:selectItem itemLabel="Ninguno" itemValue="" />
+					<f:selectItem itemLabel="Ascendente por ciudad" itemValue="Ascendente por ciudad" />
+					<f:selectItem itemLabel="Descendente por ciudad" itemValue="Descendente por ciudad" />
+					<f:selectItem itemLabel="Ascendente por fecha" itemValue="Ascendente por fecha" />
+					<f:selectItem itemLabel="Descendente por fecha" itemValue="Descendente por fecha" />
+				</p:selectOneMenu>
+				<h:commandButton value="Buscar" action="#{beanListarViajesUsuario.listarViajes}"></h:commandButton>
+            </h:panelGrid>
+            
+
+            <!-- <h:panelGrid>
+            	<p:dataTable var="viaje" value="#{beanListarViajesUsuario.listaViajes}" style="width:450px;">
+            		<p:column headerText="Id">
+            			<h:outputText value="#{viaje.id}" />
+            		</p:column>
+            		<p:column headerText="Ciudad origen">
+            			<h:outputText value="#{viaje.origen.ciudad}" />
+            		</p:column>
+            		<p:column headerText="Ciudad destino">
+            			<h:outputText value="#{viaje.destino.ciudad}" />
+            		</p:column>
+            		<p:column headerText="Fecha salida">
+            			<h:outputText value="#{viaje.origen.fecha}" />
+            		</p:column>
+            		<p:column headerText="Fecha llegada">
+            			<h:outputText value="#{viaje.destino.fecha}" />
+            		</p:column>
+            	</p:dataTable> -->
+            	<p:dataTable var="viaje" value="#{beanListarViajesUsuario.listaViajes}" style="width:1100px;">
+					<p:column headerText="Id" width="100">
+						<h:outputText value="#{viaje.id}" />
+					</p:column>
+					<p:column headerText="Precio" width="100">
+						<h:outputText value="#{viaje.precio}" />
+					</p:column>
+					<p:column headerText="Asientos" width="100">
+						<h:outputText value="#{viaje.plazas}" />
+					</p:column>
+					<p:column headerText="Ciudad de salida" width="100">
+						<h:outputText value="#{viaje.origen.ciudad}" />
+					</p:column>
+					<p:column headerText="Ciudad de destino" width="100">
+						<h:outputText value="#{viaje.destino.ciudad}" />
+					</p:column>
+					<p:column headerText="Fecha de salida" width="100">
+						<h:outputText value="#{viaje.origen.fecha}" />
+					</p:column>
+					<p:column headerText="Fecha de llegada" width="100">
+						<h:outputText value="#{viaje.destino.fecha}" />
+					</p:column>
+<!-- 					<p:column width="115"> -->
+<!-- 						<h:commandButton value="Ver Reservas" action="#{beanListarViajesUsuario.visualizarReservas}"> -->
+<!-- 							<f:setPropertyActionListener value="#{viaje}" target="#{beanListarViajesUsuario.viajeSeleccionado}"/>  -->
+<!-- 						</h:commandButton> -->
+<!-- 					</p:column> -->
+				</p:dataTable>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

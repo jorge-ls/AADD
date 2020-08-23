@@ -1,0 +1,100 @@
+package beans;
+
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
+import javax.faces.event.ActionEvent;
+import javax.jms.JMSException;
+import javax.naming.NamingException;
+
+import controlador.ControladorBlaBlaCar;
+import jms.PublicadorValoracion;
+import jms.SuscriptorApartado;
+import model.Usuario;
+
+public class BeanValoracion {
+	
+	private String puntuacion;
+	private String comentario;
+	private Usuario conductor;
+	private List<Usuario> usuarios;
+	private Map<String, String> mensajesRecibidos = new
+			LinkedHashMap<String, String>();
+	private String[] mensajesRecibidosSeleccionados = null;
+	
+	public String getPuntuacion() {
+		return puntuacion;
+	}
+	
+	//public Usuario getConductor() {
+		//return ControladorBlaBlaCar.getInstancia().getConductorViaje(idViaje)
+	
+	//}
+	
+	public void setConductor(Usuario conductor) {
+		this.conductor = conductor;
+	}
+	
+	public void setUsuarios(List<Usuario> usuarios) {
+		this.usuarios = usuarios;
+	}
+	public void setPuntuacion(String puntuacion) {
+		this.puntuacion = puntuacion;
+	}
+	
+	public void enviarTexto(ActionEvent event) {
+		String resultado = "";
+		if (puntuacion == null || puntuacion.equals("")) {
+			resultado = "Se tiene que elegir una puntuacion de 1 a 10";
+			FacesContext.getCurrentInstance().addMessage("ShippingForm:texto",
+					new FacesMessage(resultado));
+		}
+		try {
+			PublicadorValoracion.enviar(puntuacion,comentario);
+		} catch (NamingException e) {
+			resultado = "Error durante el envio.";
+			e.printStackTrace();
+		} catch (JMSException e) {
+			resultado = "Error durante el envio.";
+			e.printStackTrace();
+		}
+		resultado = "Envio realizado correctamente.";
+		FacesContext.getCurrentInstance().addMessage("ShippingForm:texto",
+				new FacesMessage(resultado));
+		puntuacion = "";
+	}
+	public void recibirTodosTexto(ActionEvent event) {
+		try {
+			SuscriptorApartado.registrarApartado();
+		} catch (NamingException e) {
+			e.printStackTrace();
+		} catch (JMSException e) {
+			e.printStackTrace();
+		}
+	}
+	public String[] getMensajesRecibidosSeleccionados() {
+		return mensajesRecibidosSeleccionados;
+	}
+	public void setMensajesRecibidosSeleccionados(
+			String[] mensajesRecibidosSeleccionados) {
+		this.mensajesRecibidosSeleccionados =
+				mensajesRecibidosSeleccionados;
+	}
+	public Map<String, String> getMensajesRecibidos() {
+		return mensajesRecibidos;
+	}
+	public void setMensajesRecibidos(Map<String, String> mensajesRecibidos)
+	{
+		this.mensajesRecibidos = mensajesRecibidos;
+	}
+	public String getComentario() {
+		return comentario;
+	}
+	public void setComentario(String comentario) {
+		this.comentario = comentario;
+	}
+
+}

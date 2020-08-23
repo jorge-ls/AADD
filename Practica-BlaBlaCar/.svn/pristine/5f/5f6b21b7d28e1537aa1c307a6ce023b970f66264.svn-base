@@ -1,0 +1,38 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+		xmlns:p="http://primefaces.org/ui">
+<ui:composition template="/WEB-INF/templates/basicTemplate.xhtml">
+	<ui:define name="title">Viajes Propios</ui:define>
+	<ui:define name="content">
+		<h:form>
+            	<p:dataTable var="viaje" value="#{beanViajesPropios.listaViajes}" style="width:1000px;">
+            		<f:facet name="header">Mis Viajes</f:facet>
+					<p:column headerText="Id" width="50">
+						<h:outputText value="#{viaje.id}" />
+					</p:column>
+					<p:column headerText="Ciudad de salida" width="100">
+						<h:outputText value="#{viaje.origen.ciudad}" />
+					</p:column>
+					<p:column headerText="Ciudad de destino" width="100">
+						<h:outputText value="#{viaje.destino.ciudad}" />
+					</p:column>
+					<p:column headerText="Fecha de salida" width="100">
+						<h:outputText value="#{viaje.origen.fecha}" />
+					</p:column>
+					<p:column headerText="Fecha de llegada" width="100">
+						<h:outputText value="#{viaje.destino.fecha}" />
+					</p:column>
+					<p:column width="75">
+						<h:commandButton value="Ver Reservas" action="#{beanViajesPropios.visualizarReservas}">
+							<f:setPropertyActionListener value="#{viaje}" target="#{beanViajesPropios.viajeSeleccionado}"/> 
+						</h:commandButton>
+					</p:column>
+				</p:dataTable>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>
